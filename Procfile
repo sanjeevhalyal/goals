@@ -1,0 +1,1 @@
+web: gunicorn goal_beta1.wsgi:application --log-file -
