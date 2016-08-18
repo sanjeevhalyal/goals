@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+	<html>
+		<head><title>Mini Task</title>
+		<style>body{background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/confectionary.png) repeat; }</style>
+		</head>
+		<body>
+		<div id='minitask' style='border:5px solid rgba(255,176,31,0.7);z-index:1;border-radius: 50px/20px;height:200px;width:80%;margin-left:auto;margin-right:auto;background:white;text-align:center;font-size:50px'>
+		<label style='font-family:Impact, Charcoal, sans-serif;'>MiniTasker</label><br/>
+		<label id='co'>Count</label><br/>
+		<label id='tt' style=''><input id='txt' type='text'/></label><br/>
+		<button id='but' onclick='toggle()'>Start</button>
+		</div>
+		
+		
+		<script>
+			var c=0;
+var timer_is_on=false;
+function displayCount() {
+	if(c>1200){
+    document.getElementById('co').innerHTML="<label style='color:red'>"+c+"</label>";}
+	else{
+	document.getElementById('co').innerHTML=c;}
+	}
+
+function count() {
+    if(timer_is_on) {
+        c=c+1;
+        displayCount();
+    }
+}
+	
+function toggle() {
+    if(timer_is_on) {
+       timer_is_on = false;
+	   document.getElementById('tt').style.opacity='0';
+       document.getElementById('tt').innerHTML="<input  id='txt' type='text'/>";
+	   document.getElementById('tt').style.opacity='1';
+	   document.getElementById('co').innerHTML='Count';
+	   document.getElementById('but').innerHTML='Start';
+	   c=0;
+    } else {
+       timer_is_on = true;
+	   document.getElementById('tt').innerHTML=document.getElementById('txt').value;
+	   document.getElementById('but').innerHTML='Stop';
+	   
+    }                   
+}
+var interval = setInterval(count,1000);
+
+
+		</script>
+		</body>
+	</html>

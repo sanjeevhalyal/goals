@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+	<html>
+		<head><title>Task List</title>
+			<style>
+				body{
+				background: rgba(200,173,127,0.1) ;width: 98%;margin-left: auto ;
+				margin-right: auto ;opacity:1;}
+
+				.button,button{
+				border:1px solid #393b3e;-webkit-box-shadow: #737373 0px 1px 5px ;text-transform:uppercase;
+				-moz-box-shadow: #737373 0px 1px 5px ; box-shadow: #737373 0px 1px 5px ;
+				-webkit-border-radius: 23px; -moz-border-radius: 23px;
+				border-radius: 23px;font-size:14px;font-family:arial, helvetica, sans-serif; padding: 0px 5px 0px 5px; text-decoration:none; display:inline-block;text-shadow: 0px 1px 0 rgba(10,10,10,0.5);font-weight:bold; color: #8C8C8C;
+				background-color: #515459; background-image: -webkit-gradient(linear, left top, left bottom, from(#515459), to(#3B3C40));
+				background-image: -webkit-linear-gradient(top, #515459, #3B3C40);
+				background-image: -moz-linear-gradient(top, #515459, #3B3C40);
+				background-image: -ms-linear-gradient(top, #515459, #3B3C40);
+				background-image: -o-linear-gradient(top, #515459, #3B3C40);
+				background-image: linear-gradient(to bottom, #515459, #3B3C40);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#515459, endColorstr=#3B3C40);
+				}
+
+				.button,button:hover{
+				border:1px solid #393b3e;text-transform:uppercase;
+				background-color: #3B3C40; background-image: -webkit-gradient(linear, left top, left bottom, from(#3B3C40), to(#202124));
+				background-image: -webkit-linear-gradient(top, #3B3C40, #202124);
+				background-image: -moz-linear-gradient(top, #3B3C40, #202124);
+				background-image: -ms-linear-gradient(top, #3B3C40, #202124);
+				background-image: -o-linear-gradient(top, #3B3C40, #202124);
+				background-image: linear-gradient(to bottom, #3B3C40, #202124);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#3B3C40, endColorstr=#202124);
+				}
+				.task{border-radius: 10px;border-style:solid;border-left-color:rgba(48,213,200,0.05); 
+				border-top-color:rgba(48,213,200,0.05);
+				border-right-color:rgba(212,175,55,0.05);
+				border-bottom-color:rgba(212,175,55,0.05);
+				box-shadow: inset 0 0 10vw rgba(255,255,255,0.4);
+				background-image:
+				-webkit-linear-gradient(left top, 
+				rgba(48,213,200,0.2), 
+				rgba(212,175,55,0.2));}
+				
+				progress[value]::-webkit-progress-bar {
+				background-color: #eee;
+				border-radius: 2px;
+				width:300%;
+				height:200%;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+				}
+
+				progress[value]::-webkit-progress-value {
+				background-image:
+				-webkit-linear-gradient(-45deg, 
+				transparent 33%, rgba(0, 0, 0, .1) 33%, 
+				rgba(255,255, 255, .1) 66%, transparent 66%),
+				-webkit-linear-gradient(top, 
+				rgba(255, 255, 255, .25), 
+				rgba(0, 0, 0, .25)),
+				-webkit-linear-gradient(left, #09c, #f44);
+
+				border-radius: 2px; 
+				background-size: 35px 20px, 100% 100%, 100% 100%;
+				}
+
+				ul.sidenav {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				width: 25%;
+				background-color: #f1f1f1;
+				position: fixed;
+				height: 100%;
+				overflow: auto;
+				}
+
+				ul.sidenav li a {
+				display: block;
+				color:rgb(166,123,91);
+				padding: 8px 16px;
+				text-decoration: none;
+				border-right: 1px solid rgb(166,123,91);
+
+
+				}
+
+				ul.sidenav li a.active {
+				background-color: rgba(255,176,31,0.7);
+				color: #000;
+				}
+
+				ul.sidenav li a:hover:not(.active) {
+				background-color: #555;
+				color: white;
+				}
+
+
+				@media screen and (max-width: 1050px){
+				ul.sidenav {
+				width:100%;
+				height:auto;
+				position:relative;
+				}
+				ul.sidenav li a {
+				float: left;
+				padding: 15px;
+				}
+				}
+
+				@media screen and (max-width: 400px){
+				ul.sidenav li a {
+				text-align: center;
+				float: none;
+				}
+				}
+
+				label{text-transform:uppercase;color:rgb(166,123,91);
+				padding: 8px 16px;
+				text-decoration: none;
+				border: 1px solid rgb(166,123,91);}
+
+			</style>
+
+			<script>
+				
+				function nulltask(){
+				var m = new Date();
+				var dateString =
+				m.getUTCFullYear() +"-"+
+				("0" + (m.getUTCMonth()+1)).slice(-2) +"-"+
+				("0" + m.getUTCDate()).slice(-2);
+				document.getElementById('body').style.opacity='0.1';
+				document.getElementById('main').style.display='none';
+				document.getElementById('taskform').style.display='block';
+				document.getElementById('id_startdate').type='date';
+				document.getElementById('id_completedate').type='date';
+				document.getElementById('id_startdate').value=dateString;
+				document.getElementById('id_topbranch').value="Firsttask";
+				document.getElementById('id_next').value="NoNext";
+				document.getElementById('id_previous').value="NoPrevious";
+				document.getElementById('id_progressvalue').value='0';
+				document.getElementById('id_progressvalue').setAttribute('readonly', true);
+				}
+				function nt(nxt,pre,sdte){
+				document.getElementById('body').style.opacity='0.1';
+				document.getElementById('main').style.display='none';
+				document.getElementById('taskform').style.display='block';
+				document.getElementById('id_startdate').type='date';
+				document.getElementById('id_completedate').type='date';
+				document.getElementById('id_startdate').value=sdte;
+				document.getElementById('id_topbranch').value="NULL";
+				document.getElementById('id_next').value=nxt;
+				document.getElementById('id_previous').value=pre;
+				document.getElementById('id_progressvalue').value='0';
+				document.getElementById('id_progressvalue').setAttribute('readonly', true);
+				}
+				function et(txt,tb,nxt,pre,sdte,cdte,aud,pv){
+				aud = aud.substring(aud.lastIndexOf('/'));alert(aud);
+				document.getElementById('body').style.opacity='0.1';
+				document.getElementById('main').style.display='none';
+				document.getElementById('taskform').style.display='block';
+				document.getElementById('id_startdate').type='date';
+				document.getElementById('id_completedate').type='date';
+				document.getElementById('id_startdate').value=sdte;
+				document.getElementById('id_completedate').value=cdte;
+				document.getElementById('id_topbranch').value=tb;
+				document.getElementById('id_next').value=nxt;
+				document.getElementById('id_previous').value=pre;
+				document.getElementById('id_progressvalue').value=pv;
+				document.getElementById('id_audio').value=aud;
+				document.getElementById('id_text').value=txt;
+				document.getElementById('id_progressvalue').setAttribute('readonly', true);
+				}
+				function subtask(tb,sdte){document.getElementById('body').style.opacity='0.1';
+				document.getElementById('main').style.display='none';
+				document.getElementById('taskform').style.display='block';
+				document.getElementById('id_startdate').type='date';
+				document.getElementById('id_completedate').type='date';
+				document.getElementById('id_startdate').value=sdte;
+				document.getElementById('id_topbranch').value=tb;
+				document.getElementById('id_next').value="NoNext";
+				document.getElementById('id_previous').value="NoPrevious";
+				document.getElementById('id_progressvalue').value='0';
+				document.getElementById('id_progressvalue').setAttribute('readonly', true);
+				}
+				function audioup(sender){
+				var fileExt = sender.value;
+				fileExt = fileExt.substring(fileExt.lastIndexOf('\\'));
+				document.getElementById("id_audio").value=fileExt;
+				document.getElementById('files').style.display='none';
+				}
+				function cancelbut(){
+				document.getElementById('taskform').style.display='none';
+				document.getElementById('files').style.display='inline';
+				document.getElementById('body').style.opacity='1';
+				document.getElementById('main').style.display='block';}
+				var loop=1;
+				function cou(ttau){
+
+				if(loop){
+				document.getElementById(ttau).play();
+				document.getElementById(ttau).currentTime = 0;
+				document.getElementById('butt'.concat(ttau)).innerHTML='pause';loop=0;}
+				else{document.getElementById(ttau).pause();
+				document.getElementById('butt'.concat(ttau)).innerHTML='play';loop=1;}}
+			</script>
+		</head>
+		<body><div id='body'>
+				<div style="text-align:center;padding:10px;text-transform:uppercase;">
+					<a href="#Daliy" style="font-family:Impact, Charcoal, sans-serif;font-size:800%;text-aline:center;text-decoration:none;color:rgba(255,110,94,0.8);">My Goal<span style="color:rgba(255,176,31,0.7)">s</span></a>
+					<div style="color:rgba(202,31,123,0.5);font-family:'Comic Sans MS', cursive, sans-serif"> The best application to reach your goal
+					</div></div><hr>
+					<ul class="sidenav">
+						<li><a href="{% url 'goal:daliy' %}">Daliy</a></li>
+						<li><a class="active" href="{% url 'goal:task' %}">Task</a></li>
+						<li style="float:right;border-left: 1px solid rgb(166,123,91);"><a class="active" href="#about">About(not ready)</a></li>
+					</ul><hr>
+						<div id='main' style='width:90%;margin-left:auto;margin-right:auto;'>
+							<div id='firsttask' style="text-align: center;z-index:-1;display:block;width:100%;margin-left: auto;margin-right: auto ;">
+								<button onclick='nulltask()' style='width: 100px;height:100px;border-radius:100%;background-color: rgba(255,176,31,0.7);background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,176,31,0.7)), to(rgba(255,176,31,0.7)));'><span style="font-size:80px">+</span></button>
+							</div>
+							<div id='article' style='opacity:0;transition:opacity 2s '>
+								{% for tt in t%}
+								<article class="task {{tt.tbid}}" id='{{tt.txtid}}' style="visibility:visible;text-align: center;display:none">
+									<div id='up'style='width:100%,margin 0 auto'><button onclick='up("{{tt.txtid}}","{{tt.tbid}}","{{tt.topbranch}}")' style='width:40%;margin 0 auto'>Up</button></div>
+									<header>
+										<h1 style='display:block;'><a href="" style="color:rgb(200,173,127);display:inline;text-decoration:none;text-transform:capitalize;font-size:200%;">
+												<b>{{tt.text}}</b></a></h1>
+										<div id='previous' style='float:left;'><button onclick='preside("{{tt.tbid}}","{{tt.preid}}")' style='height:100px;'><</button></div>
+										<div id='next' style='float:right;'><button onclick='nxtside("{{tt.tbid}}","{{tt.nxtid}}","{{tt.topbranch}}")' style='height:100px;'>></button></div>
+										<p style="float:left;padding-left:20px">
+											<span id='count'></span><br/>
+											<progress value="{{tt.progressvalue}}" max="100" style="-webkit-appearance: none;appearance: none;">
+											</progress></p><br/>
+
+									<h3 style='float:right;padding-right:30px'>
+										<button  id='butt{{tt.audio.url}}' style='float:right;' onclick="cou('{{tt.audio.url}}')">Play/Pause</button>
+										<br/><br/>
+										<button onclick="et('{{tt.text}}','{{tt.topbranch}}','{{tt.next}}','{{tt.previous}}','{{tt.startdate}}','{{tt.completedate}}','{{tt.audio}}','{{tt.progressvalue}}')"> Edit Task</button>
+										<button onclick="nt('{{tt.next}}','{{tt.text}}','{{tt.completedate}}')"> Add Next Task</button>
+										<button onclick="subtask('{{tt.text}}','{{tt.startdate}}')"> Add Sub Task</button>
+											</h3><br/><br/><br/><br/><br/><br/>
+										<div id='down'style='width:100%,margin 0 auto'><button onclick='down("{{tt.txtid}}")' style='width:40%'>Down</button></div>
+										</header>
+										
+										<audio  id='{{tt.audio.url}}' preload="none"  >
+											<source src="{{tt.audio.url}}" type="audio/mpeg">
+											</audio>
+										</article>
+										<br/>
+										{%endfor%}
+									</div>
+									</div></div>
+							<div id='taskform' style="z-index:10;display:none;width: 50%;margin-left: auto;margin-right: auto ;">
+								<form action="{% url 'goal:newtask' %}" method="post">
+									{% csrf_token %}{% for field in form %}
+									<div class="fieldWrapper" >
+										{{ field.errors }}
+										{{ field.label_tag }} {{ field }}
+										{% if field.help_text %}
+										<p class="help">{{ field.help_text|safe }}</p>
+										{% endif %}
+									</div><br/>
+									{% endfor %}
+									<input type="submit" id='in' value="Submit" /></form>
+								<Button style='float:right'  onclick='cancelbut()'>Cancel</button>
+								<input  type="file" onchange='audioup(this)' id="files" name="files[]" multiple />
+
+							</div>
+							{% if co %}
+							<script>
+								document.getElementById('id_audio').value='/7y.mp3';
+								document.getElementById('firsttask').style.display='none';
+								document.getElementsByClassName("id0")[0].style.display='block';
+								document.getElementById('article').style.opacity='1';
+								function down(id){var cl=document.getElementsByClassName(id)
+								for (i=0,len=cl.length;i<len;i++){
+								cl[i].style.display='block';}
+								if((cl[0].style.display).localeCompare('')){
+								document.getElementById(id).style.display='none';}}
+								
+								function nxtside(tbid,sid,tb)
+								{
+								if((sid.localeCompare('id2'))!=0){ 
+								var cl=document.getElementsByClassName(tbid)
+								for (i=0,len=cl.length;i<len;i++){
+								cl[i].style.display='none';}
+								document.getElementById(sid).style.display='block';}}
+								
+								
+								function preside(tbid,sid)
+								{
+								if((sid.localeCompare('id3'))!=0){
+								var cl=document.getElementsByClassName(tbid)
+								for (i=0,len=cl.length;i<len;i++){
+								cl[i].style.display='none';}
+								document.getElementById(sid).style.display='block';
+								}}
+								
+								function up(id,tbid,tb){
+								if((tb.localeCompare('NULL')!=0)||(tb.localeCompare('Firsttask'))!=0){
+								document.getElementById(tbid).style.display='block';
+								var cl=document.getElementsByClassName(tbid)
+								for (i=0,len=cl.length;i<len;i++){
+								cl[i].style.display='none'; }}}
+								
+								
+								
+								</script>
+							{% endif %}
+						</body>
+					</html>

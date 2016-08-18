@@ -1,0 +1,30 @@
+from django import forms
+
+class NameForm(forms.Form):
+	text=forms.CharField(label='text',max_length=200)
+	topbranch=forms.CharField(label='topbranch',max_length=200)
+	next=forms.CharField(label='next',max_length=200)
+	previous=forms.CharField(label='previous',max_length=200)
+	startdate=forms.DateField(label='startdate')
+	completedate=forms.DateField(label='completedate')
+	progressvalue=forms.IntegerField(label='progressvalue')
+	audio = forms.CharField(label='audio',max_length=200)
+	
+class DayForm(forms.Form):
+	starttime=forms.TimeField(label='starttime')
+	t1=forms.CharField(label='t1',max_length=200)
+	t2=forms.CharField(label='t2',max_length=200)
+	t3=forms.CharField(label='t3',max_length=200)
+	t4=forms.CharField(label='t4',max_length=200)
+	t5=forms.CharField(label='t5',max_length=200)
+	t6=forms.CharField(label='t6',max_length=200)
+	t7=forms.CharField(label='t7',max_length=200)
+	t8=forms.CharField(label='t8',max_length=200)
+	t9=forms.CharField(label='t9',max_length=200)
+	t10=forms.CharField(label='t10',max_length=200)
+	t11=forms.CharField(label='t11',max_length=200)
+	t12=forms.CharField(label='t12',max_length=200)
+	t13=forms.CharField(label='t13',max_length=200)
+	t14=forms.CharField(label='t14',max_length=200)
+	t15=forms.CharField(label='t15',max_length=200)
+	t16=forms.CharField(label='t16',max_length=200)
